@@ -1,0 +1,15 @@
+[package]
+name = "timeme"
+version = "0.1.0"
+edition = "2018"
+authors = ["Austin Poor <a-poor@users.noreply.github.com>"]
+license = "MIT"
+description = "A tool to time program execution"
+readme = "README.md"
+homepage = "https://github.com/a-poor/timeme"
+repository = "https://github.com/a-poor/timeme"
+keywords = ["cli", "timer", "cli", "utilities"]
+categories = ["command-line-utilities"]
+
+
+[dependencies]
