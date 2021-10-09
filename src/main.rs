@@ -2,6 +2,8 @@ use clap::{App, Arg};
 use std::process::Command;
 use std::time::{Duration, Instant};
 
+const VERSION: &str = "0.2.0";
+
 fn sum(data: &mut Vec<f64>) -> f64 {
     let mut sum: f64 = 0.0;
     for d in data {
@@ -22,7 +24,7 @@ fn std(data: &mut Vec<f64>) -> f64 {
 
 fn main() {
     let app = App::new("timeme")
-        .version("0.1")
+        .version(VERSION)
         .author("Austin Poor <a-poor@users.noreply.github.com>")
         .about("Times the execution of a command.")
         .arg(Arg::new("number")
@@ -80,14 +82,14 @@ fn main() {
         let loop_start = Instant::now();
         while n_loops < 1 || loop_start.elapsed().as_secs_f64() < 0.2 {
             let start = Instant::now();
-            let _output = cmd.status().expect("Error running the command");
+            let _output = cmd.output().expect("Error running the command");
             times.push(start.elapsed());
             n_loops += 1;
         }
     } else {
         for _ in 0..n {
             let start = Instant::now();
-            let _output = cmd.status().expect("Error running the command");
+            let _output = cmd.output().expect("Error running the command");
             times.push(start.elapsed());
             n_loops += 1;
         }
@@ -113,7 +115,7 @@ fn main() {
 
     // Format the results
     println!(
-        "Avg time {:?} (+/- {:?}) for {} loops",
+        "{:?} (+/- {:?}) for {} loops",
         delta_avg, delta_std, n_loops
     );
 }
