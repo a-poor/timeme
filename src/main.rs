@@ -1,5 +1,5 @@
+use clap::{App, Arg};
 use std::process::Command;
-use clap::{Arg, App};
 use std::time::{Duration, Instant};
 
 fn sum(data: &mut Vec<f64>) -> f64 {
@@ -17,11 +17,10 @@ fn mean(data: &mut Vec<f64>) -> f64 {
 fn std(data: &mut Vec<f64>) -> f64 {
     let mean = mean(data);
     let total = data.iter().map(|d| (d - mean).powi(2)).sum::<f64>();
-    (total / (data.len() as f64 - 1.0)).sqrt()
+    (total / (data.len() as f64)).sqrt()
 }
 
 fn main() {
-
     let app = App::new("timeme")
         .version("0.1")
         .author("Austin Poor <a-poor@users.noreply.github.com>")
@@ -72,18 +71,16 @@ fn main() {
     // Get the arguments to pass to the command
     let cmd_args: Vec<_> = matches.values_of("ARGS").unwrap().collect();
 
-
     // Build the command to run
     let mut cmd = Command::new(cmd_name);
     cmd.args(cmd_args);
 
-
     let mut times: Vec<Duration> = Vec::new();
-    
+
     let mut n_loops = 0;
     if guess_time {
         let loop_start = Instant::now();
-        while n_loops < 1 || (loop_start.elapsed().as_secs_f64() < 0.2 && (n_loops as f64).log2() % 1. != 0.) {
+        while n_loops < 1 || loop_start.elapsed().as_secs_f64() < 0.2 {
             let start = Instant::now();
             let _output = cmd.status().expect("Error running the command");
             times.push(start.elapsed());
@@ -103,21 +100,56 @@ fn main() {
 
     // Calculate mean & std
     let sec_avg = mean(&mut ftimes);
-    let delta_avg = if sec_avg > 0. { Duration::from_secs_f64(sec_avg) } else { Duration::ZERO };
+    let delta_avg = if sec_avg > 0. {
+        Duration::from_secs_f64(sec_avg)
+    } else {
+        Duration::ZERO
+    };
 
     let sec_std = std(&mut ftimes);
-    let delta_std = if sec_std > 0. { Duration::from_secs_f64(sec_std) } else { Duration::ZERO };
+    let delta_std = if sec_std > 0. {
+        Duration::from_secs_f64(sec_std)
+    } else {
+        Duration::ZERO
+    };
 
     // Format the results
     println!("Number of loops: {}", n_loops);
     println!("Loop time: {:?} (+/- {:?})", delta_avg, delta_std);
-
 }
 
 #[cfg(test)]
 mod tests {
     #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+    fn test_sum() {
+        let mut data: Vec<f64> = vec![];
+        assert_eq!(0.0, super::sum(&mut data));
+
+        let mut data: Vec<f64> = vec![1.0];
+        assert_eq!(1.0, super::sum(&mut data));
+
+        let mut data: Vec<f64> = vec![1.0, 2.5, 3.0];
+        assert_eq!(6.5, super::sum(&mut data));
+
+        let mut data: Vec<f64> = vec![-1.0, 0.0, 1.0];
+        assert_eq!(0.0, super::sum(&mut data));
+    }
+
+    #[test]
+    fn test_mean() {
+        let mut data: Vec<f64> = vec![1.0, 2.0, 3.0, 4.0, 5.0];
+        assert_eq!(3.0, super::mean(&mut data));
+
+        let mut data: Vec<f64> = vec![1.0];
+        assert_eq!(1.0, super::mean(&mut data));
+    }
+
+    #[test]
+    fn test_std() {
+        let mut data: Vec<f64> = vec![1.0, 1.0, 1.0];
+        assert_eq!(0.0, super::std(&mut data));
+
+        let mut data: Vec<f64> = vec![1.0, 2.0];
+        assert_eq!(0.5, super::std(&mut data));
     }
 }
