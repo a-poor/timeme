@@ -57,9 +57,7 @@ fn main() {
     let mut n: i32 = 0;
     if let Some(sn) = matches.value_of("number") {
         let new_n: i32 = sn.parse().unwrap();
-        if new_n <= 0 {
-            println!("Using a sensible default value for `number`");
-        } else {
+        if new_n > 0 {
             n = new_n;
         }
     }
@@ -114,8 +112,10 @@ fn main() {
     };
 
     // Format the results
-    println!("Number of loops: {}", n_loops);
-    println!("Loop time: {:?} (+/- {:?})", delta_avg, delta_std);
+    println!(
+        "Avg time {:?} (+/- {:?}) for {} loops",
+        delta_avg, delta_std, n_loops
+    );
 }
 
 #[cfg(test)]
