@@ -12,6 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Publish Crate
-      run: cargo publish --token {{ CRATE_API_KEY }}
+      env:
+        CRATE_KEY: ${{ secrets.CRATE_API_KEY }}
+      run: cargo publish --token "$CRATE_KEY"
       
       
