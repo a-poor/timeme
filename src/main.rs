@@ -2,7 +2,7 @@ use clap::{App, Arg};
 use std::process::Command;
 use std::time::{Duration, Instant};
 
-const VERSION: &str = "0.2.0";
+const VERSION: &str = "0.2.3";
 
 /// Calculates the sum of the of the floats
 /// in the given `Vector`.
