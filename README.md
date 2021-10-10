@@ -1,4 +1,4 @@
-# timme
+# timeme
 
 [![Crate Version](https://img.shields.io/crates/v/timeme.svg)](https://crates.io/crates/timeme)
 [![Rust](https://github.com/a-poor/timeme/actions/workflows/rust.yml/badge.svg?branch=main)](https://github.com/a-poor/timeme/actions/workflows/rust.yml)
