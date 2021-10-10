@@ -4,6 +4,16 @@ use std::time::{Duration, Instant};
 
 const VERSION: &str = "0.2.0";
 
+/// Calculates the sum of the of the floats
+/// in the given `Vector`.
+/// 
+/// Note: Only works with `f64` since that's
+/// all that's necessary for this program. 
+/// 
+/// # Arguments
+/// 
+/// * `data` - The Vector of floats. 
+/// 
 fn sum(data: &mut Vec<f64>) -> f64 {
     let mut sum: f64 = 0.0;
     for d in data {
@@ -12,10 +22,31 @@ fn sum(data: &mut Vec<f64>) -> f64 {
     sum
 }
 
+/// Calculates the mean of the of the floats
+/// in the given `Vector`.
+/// 
+/// Note: Only works with `f64` since that's
+/// all that's necessary for this program. 
+/// 
+/// # Arguments
+/// 
+/// * `data` - The Vector of floats. 
+/// 
 fn mean(data: &mut Vec<f64>) -> f64 {
     sum(data) / data.len() as f64
 }
 
+
+/// Calculates the standard deviation of the of
+/// the floats in the given `Vector`.
+/// 
+/// Note: Only works with `f64` since that's
+/// all that's necessary for this library. 
+/// 
+/// # Arguments
+/// 
+/// * `data` - The Vector of floats. 
+/// 
 fn std(data: &mut Vec<f64>) -> f64 {
     let mean = mean(data);
     let total = data.iter().map(|d| (d - mean).powi(2)).sum::<f64>();
