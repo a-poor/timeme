@@ -48,3 +48,13 @@ $ timeme echo Hello, world!
 1.281654ms (+/- 412.714µs) for 156 loops
 ```
 
+You can specify the number of times to run the command.
+
+```bash
+$ timeme -n 10 echo Hello, world!
+1.48318ms (+/- 326.664µs) for 10 loops
+```
+
+Or, if you leave `-n` blank, `timeme` will run the command repeatedly until
+it's been run for at least 0.2 seconds.
+
