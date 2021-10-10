@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - '*'
+      
 jobs:
   publish:
     name: Publish for ${{ matrix.os }}
@@ -14,27 +15,34 @@ jobs:
         - linux
         - windows
         - macos
+
         include:
           - name: linux
             os: ubuntu-latest
-            artifact_name: target/release/<name>
-            asset_name: <name>-linux
+            artifact_name: target/release/timeme
+            asset_name: timeme-linux
+
           - name: windows
             os: windows-latest
-            artifact_name: target/release/<name>.exe
-            asset_name: <name>-windows
+            artifact_name: target/release/timeme.exe
+            asset_name: timeme-windows
+
           - name: macos
             os: macos-latest
-            artifact_name: target/release/<name>
-            asset_name: <name>-macos
+            artifact_name: target/release/timeme
+            asset_name: timeme-macos
+
     steps:
     - uses: actions/checkout@v1
+    
     - uses: actions-rs/toolchain@v1
       with:
         profile: minimal
         toolchain: stable
+
     - name: Build
       run: cargo build --release
+
     - name: Upload binaries to release
       uses: actions/upload-artifact@v2
       with:
