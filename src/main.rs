@@ -100,7 +100,15 @@ fn main() {
     let cmd_name = matches.value_of("CMD").unwrap();
 
     // Get the arguments to pass to the command
-    let cmd_args: Vec<_> = matches.values_of("ARGS").unwrap().collect();
+    let mut cmd_args: Vec<&str> = vec![];
+    match matches.values_of("ARGS") {
+        Some(args) => {
+            for arg in args {
+                cmd_args.push(arg);
+            }
+        },
+        None => {},
+    }
 
     // Build the command to run
     let mut cmd = Command::new(cmd_name);

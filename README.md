@@ -18,8 +18,8 @@ cargo install timeme
 Here's a quick look at `timeme`'s help:
 
 ```bash
-$ timeme --help
 timeme 0.2.3
+$ timeme --help
 
 Austin Poor <a-poor@users.noreply.github.com>
 
